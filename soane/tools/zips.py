@@ -13,7 +13,7 @@ ZIP_OPTS = {
 
 def create(path, addr, body):
     '''
-    Write a new file to a zipfile.
+    Write a new address to a zipfile.
     '''
 
     if exists(path, addr):
@@ -25,7 +25,7 @@ def create(path, addr, body):
 
 def exists(path, addr):
     '''
-    Return True if a zipfile contains a file.
+    Return True if a zipfile contains an address.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
@@ -37,7 +37,7 @@ def exists(path, addr):
 
 def list_addrs(path):
     '''
-    Return a list of all file addresses in a zipfile.
+    Return a list of all addresses in a zipfile.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
@@ -53,7 +53,7 @@ def list_infos(path):
 
 def read(path, addr):
     '''
-    Return the contents of an existing file from a zipfile.
+    Return the contents of an address from a zipfile.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
@@ -74,7 +74,7 @@ def read_dict(path):
 
 def update(path, addr, body):
     '''
-    Overwrite an existing file in a zipfile.
+    Overwrite an existing address in a zipfile.
     '''
 
     if not exists(path, addr):

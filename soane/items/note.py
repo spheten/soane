@@ -63,7 +63,7 @@ class Note:
 
     def exists(self):
         '''
-        Return True if the Note exists in its zipfile.
+        Return True if the Note exists in the zipfile.
         '''
 
         return tools.zips.exists(self.path, self.addr)

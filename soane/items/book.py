@@ -23,7 +23,7 @@ class Book:
 
     def __contains__(self, addr):
         '''
-        Return True if the Book contains an existing Note.
+        Return True if the Book contains a Note.
         '''
 
         return addr in self.read_dict().keys()
@@ -40,7 +40,7 @@ class Book:
 
     def __getitem__(self, name):
         '''
-        Return an existing Note in the Book using dict syntax.
+        Return a Note in the Book using dict syntax.
         '''
 
         if note := self.read(name):
@@ -57,11 +57,11 @@ class Book:
 
     def __iter__(self):
         '''
-        Yield each Note in the Book in alphabetical order.
+        Yield each Note in the Book.
         '''
 
-        key = lambda note: note.addr
-        yield from sorted(self.read_dict().values(), key=key)
+        for addr in tools.zips.list_addrs(self.path):
+            yield Note(self.path, addr)
 
     def __len__(self):
         '''
@@ -98,7 +98,7 @@ class Book:
 
     def read(self, name, default=None):
         '''
-        Return an existing Note from the Book, or a default value.
+        Return a Note from the Book, or a default value.
         '''
 
         for addr in tools.zips.list_addrs(self.path):
@@ -111,12 +111,7 @@ class Book:
         Return a name-to-note dict of all Notes in the Book.
         '''
 
-        return {
-            note.name: note for note in [
-                Note(self.path, addr) for addr in
-                tools.zips.list_addrs(self.path)
-            ]
-        }
+        return {note.name: note for note in self}
 
     def match(self, glob):
         '''
