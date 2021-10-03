@@ -57,5 +57,5 @@ def test_update(zpath):
 
 def test_write_dict(zpath):
     # success
-    zips.write_dict(zpath,   {'foo.txt': 'foo',   'bar.txt': 'bar'})
+    zips.write_dict(zpath, {'foo.txt': 'foo', 'bar.txt': 'bar'})
     assert_zip_files(zpath, {'foo.txt': 'foo\n', 'bar.txt': 'bar\n'})
