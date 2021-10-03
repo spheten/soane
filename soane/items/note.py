@@ -38,7 +38,7 @@ class Note:
         Return the Note's unique hash code.
         '''
 
-        return hash(self.path + self.name)
+        return hash('Note:' + self.path + self.name)
 
     def __iter__(self):
         '''

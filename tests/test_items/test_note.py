@@ -58,7 +58,7 @@ def test_read(note):
 
 def test_search(note):
     # success
-    assert     note.search('alpha note')
+    assert     note.search('alpha')
     assert not note.search('nope')
 
 def test_update(note):
