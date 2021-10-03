@@ -61,7 +61,7 @@ def test_search(note):
     assert     note.search('alpha note')
     assert not note.search('nope')
 
-def test_write(note):
+def test_update(note):
     # success
-    note.write('test_write')
+    note.update('test_write')
     assert_zip_file(note.path, 'alpha.txt', 'test_write\n')

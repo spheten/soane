@@ -89,7 +89,7 @@ class Note:
 
         return text.lower().strip() in self.read().lower()
 
-    def write(self, body):
+    def update(self, body):
         '''
         Overwrite the Note's body with a string.
         '''
