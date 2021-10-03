@@ -2,6 +2,8 @@
 Class definition for 'Book'.
 '''
 
+import os.path
+
 from soane            import tools
 from soane.items.note import Note
 
@@ -82,6 +84,13 @@ class Book:
 
         tools.zips.append(self.path, name, body)
         return Note(self.path, name)
+
+    def exists(self):
+        '''
+        Return True if the Book's zipfile exists on disk.
+        '''
+
+        return os.path.isfile(self.path)
 
     def read(self):
         '''
