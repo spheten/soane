@@ -51,6 +51,10 @@ def test_write(zpath):
     zips.write(zpath, 'alpha.txt', 'test_write')
     assert_zip_file(zpath, 'alpha.txt', 'test_write\n')
 
+    # failure - nonexistent name
+    with pytest.raises(FileNotFoundError):
+        zips.write(zpath, 'nope', 'test_write')
+
 def test_write_all(zpath):
     # success
     zips.write_all(zpath,   {'foo.txt': 'foo',   'bar.txt': 'bar'})
