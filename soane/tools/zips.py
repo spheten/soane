@@ -17,7 +17,7 @@ def create(path, addr, body):
     '''
 
     if exists(path, addr):
-        raise FileExistsError(f'{addr!r} already exists in zip {path!r}')
+        raise tools.errs.addr_exists(path, addr)
 
     with zipfile.ZipFile(path, 'a', **ZIP_OPTS) as zobj:
         body = body.strip() + '\n'
@@ -78,7 +78,7 @@ def update(path, addr, body):
     '''
 
     if not exists(path, addr):
-        raise FileNotFoundError(f'{addr!r} does not exist in zip {path!r}')
+        raise tools.errs.addr_not_exists(path, addr)
 
     zdict = read_dict(path)
     zdict[addr] = body

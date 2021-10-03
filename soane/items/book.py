@@ -84,7 +84,7 @@ class Book:
 
         addr = f'{name}.txt'
         if tools.zips.exists(self.path, addr):
-            raise FileExistsError(f'{addr!r} already exists in zip {self.path!r}')
+            raise tools.errs.addr_exists(self.path, addr)
 
         tools.zips.create(self.path, addr, body)
         return Note(self.path, addr)
