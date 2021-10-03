@@ -15,5 +15,5 @@ def read(book, name):
     Print note NAME if it exists.
     '''
 
-    if note := book.get(name):
+    if note := book.read(name):
         click.echo(note.read().strip() + '\n')

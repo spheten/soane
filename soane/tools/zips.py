@@ -11,29 +11,37 @@ ZIP_OPTS = {
     'compresslevel': 5,
 }
 
-def append(path, name, body):
+def create(path, addr, body):
     '''
     Write a new file to a zipfile.
     '''
 
-    if exists(path, name):
-        raise FileExistsError(f'{name!r} already exists in zip {path!r}')
+    if exists(path, addr):
+        raise FileExistsError(f'{addr!r} already exists in zip {path!r}')
 
     with zipfile.ZipFile(path, 'a', **ZIP_OPTS) as zobj:
         body = body.strip() + '\n'
-        zobj.writestr(name, body.encode('utf-8'))
+        zobj.writestr(addr, body.encode('utf-8'))
 
-def exists(path, name):
+def exists(path, addr):
     '''
-    Return True if a zipfile contains a named file.
+    Return True if a zipfile contains a file.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
         try:
-            zobj.getinfo(name)
+            zobj.getinfo(addr)
             return True
         except KeyError:
             return False
+
+def list_addrs(path):
+    '''
+    Return a list of all file addresses in a zipfile.
+    '''
+
+    with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
+        return zobj.namelist()
 
 def list_infos(path):
     '''
@@ -43,57 +51,49 @@ def list_infos(path):
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
         return zobj.infolist()
 
-def list_names(path):
+def read(path, addr):
     '''
-    Return a list of all file names in a zipfile.
-    '''
-
-    with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
-        return zobj.namelist()
-
-def read(path, name):
-    '''
-    Return the contents of a file from a zipfile.
+    Return the contents of an existing file from a zipfile.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
-        with zobj.open(name, 'r') as fobj:
+        with zobj.open(addr, 'r') as fobj:
             return fobj.read().decode('utf-8')
 
-def read_all(path):
+def read_dict(path):
     '''
-    Return an entire zipfile as a '{name: body}' dict.
+    Return an entire zipfile as an address-to-body dict.
     '''
 
     with zipfile.ZipFile(path, 'r', **ZIP_OPTS) as zobj:
         zdict = {}
-        for name in zobj.namelist():
-            with zobj.open(name, 'r') as fobj:
-                zdict[name] = fobj.read().decode('utf-8')
+        for addr in zobj.namelist():
+            with zobj.open(addr, 'r') as fobj:
+                zdict[addr] = fobj.read().decode('utf-8')
         return zdict
 
-def write(path, name, body):
+def update(path, addr, body):
     '''
-    Overwrite a file in a zipfile with a string.
+    Overwrite an existing file in a zipfile.
     '''
 
-    if not exists(path, name):
-        raise FileNotFoundError(f'{name!r} does not exist in zip {path!r}')
+    if not exists(path, addr):
+        raise FileNotFoundError(f'{addr!r} does not exist in zip {path!r}')
 
-    zdict = read_all(path)
-    zdict[name] = body
+    zdict = read_dict(path)
+    zdict[addr] = body
 
     with zipfile.ZipFile(path, 'w', **ZIP_OPTS) as zobj:
-        for name, body in zdict.items():
+        for addr, body in zdict.items():
             body = body.strip() + '\n'
-            zobj.writestr(name, body.encode('utf-8'))
+            zobj.writestr(addr, body.encode('utf-8'))
 
-def write_all(path, zdict):
+def write_dict(path, zdict):
     '''
-    Overwrite an entire zipfile with a '{name: body}' dict.
+    Overwrite an entire zipfile with an address-to-body dict.
     '''
 
     with zipfile.ZipFile(path, 'w', **ZIP_OPTS) as zobj:
-        for name, body in zdict.items():
+        for addr, body in zdict.items():
             body = body.strip() + '\n'
-            zobj.writestr(name, body.encode('utf-8'))
+            zobj.writestr(addr, body.encode('utf-8'))

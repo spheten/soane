@@ -25,7 +25,7 @@ def test_BookType(tmpdir):
 def test_NameType():
     # success
     assert clui.NAME.convert('TEST-123!@#$', None, None) == \
-        'test-123.txt'
+        'test-123'
 
     # failure - empty slug
     with pytest.raises(click.exceptions.BadParameter):

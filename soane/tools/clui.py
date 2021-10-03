@@ -8,8 +8,6 @@ import click
 
 from soane import tools
 
-NAME_EXTENSION = 'txt'
-
 class BookType(click.ParamType):
     '''
     A custom parameter type for Book paths.
@@ -44,7 +42,7 @@ class NameType(click.ParamType):
         if slug == '':
             self.fail(f'Note name {value!r} slugs to empty string')
 
-        return f'{slug}.{NAME_EXTENSION}'
+        return slug
 
 BOOK = BookType()
 NAME = NameType()

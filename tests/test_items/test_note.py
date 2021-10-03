@@ -14,8 +14,8 @@ def note(zpath):
 def test_init(note):
     # success
     assert note.path
-    assert note.name == 'alpha.txt'
-    assert note.stem == 'alpha'
+    assert note.addr == 'alpha.txt'
+    assert note.name == 'alpha'
 
 def test_eq(note):
     # success

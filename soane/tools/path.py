@@ -58,18 +58,18 @@ def join(*elems):
     path = os.path.join(*map(str, elems))
     return os.path.normpath(path)
 
-def slug(stem):
+def name(path):
     '''
-    Return a path's stem as a slug string.
-    '''
-
-    stem = stem.lower().strip()
-    return ''.join(char for char in stem if char in SLUG_CHARS)
-
-def stem(path):
-    '''
-    Return a path's basename, without its extension.
+    Return a path's base name, without its extension.
     '''
 
     base = os.path.basename(path)
     return os.path.splitext(base)[0]
+
+def slug(name):
+    '''
+    Return a name string as a slug string.
+    '''
+
+    name = name.lower().strip()
+    return ''.join(char for char in name if char in SLUG_CHARS)

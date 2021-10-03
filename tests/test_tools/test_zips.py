@@ -7,19 +7,25 @@ import pytest
 from soane.tools    import zips
 from tests.conftest import assert_zip_file, assert_zip_files
 
-def test_append(zpath):
+def test_create(zpath):
     # success
-    zips.append(zpath, 'append.txt', 'test_append')
+    zips.create(zpath, 'append.txt', 'test_append')
     assert_zip_file(zpath, 'append.txt', 'test_append\n')
 
-    # failure - existing name
+    # failure - existing address
     with pytest.raises(FileExistsError):
-        zips.append(zpath, 'append.txt', 'test_append')
+        zips.create(zpath, 'append.txt', 'test_append')
 
 def test_exists(zpath):
     # success
     assert     zips.exists(zpath, 'alpha.txt')
     assert not zips.exists(zpath, 'nope.txt')
+
+def test_list_addrs(zpath):
+    # success
+    assert set(zips.list_addrs(zpath)) == {
+        'alpha.txt', 'bravo.txt', 'charlie.txt',
+    }
 
 def test_list_infos(zpath):
     # success
@@ -28,34 +34,28 @@ def test_list_infos(zpath):
         'alpha.txt', 'bravo.txt', 'charlie.txt',
     }
 
-def test_list_names(zpath):
-    # success
-    assert set(zips.list_names(zpath)) == {
-        'alpha.txt', 'bravo.txt', 'charlie.txt',
-    }
-
 def test_read(zpath):
     # success
     assert zips.read(zpath, 'alpha.txt') == 'Alpha note.\n'
 
-def test_read_all(zpath):
+def test_read_dict(zpath):
     # success
-    assert zips.read_all(zpath) == {
+    assert zips.read_dict(zpath) == {
         'alpha.txt':   'Alpha note.\n',
         'bravo.txt':   'Bravo note.\n',
         'charlie.txt': 'Charlie note.\n',
     }
 
-def test_write(zpath):
+def test_update(zpath):
     # success
-    zips.write(zpath, 'alpha.txt', 'test_write')
+    zips.update(zpath, 'alpha.txt', 'test_write')
     assert_zip_file(zpath, 'alpha.txt', 'test_write\n')
 
-    # failure - nonexistent name
+    # failure - nonexistent address
     with pytest.raises(FileNotFoundError):
-        zips.write(zpath, 'nope', 'test_write')
+        zips.update(zpath, 'nope', 'test_write')
 
-def test_write_all(zpath):
+def test_write_dict(zpath):
     # success
-    zips.write_all(zpath,   {'foo.txt': 'foo',   'bar.txt': 'bar'})
+    zips.write_dict(zpath,   {'foo.txt': 'foo',   'bar.txt': 'bar'})
     assert_zip_files(zpath, {'foo.txt': 'foo\n', 'bar.txt': 'bar\n'})

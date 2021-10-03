@@ -18,7 +18,7 @@ def test_init(book):
 
 def test_contains(book):
     # success
-    assert 'alpha.txt' in book
+    assert     'alpha' in book
     assert not 'nope'  in book
 
 def test_eq(book):
@@ -29,7 +29,11 @@ def test_eq(book):
 
 def test_getitem(book):
     # success
-    assert book['alpha.txt'] == book.read()['alpha.txt']
+    assert book['alpha'] == book.read_dict()['alpha']
+
+    # failure - nonexistent note
+    with pytest.raises(KeyError):
+        book['nope']
 
 def test_hash(book):
     # success
@@ -38,9 +42,7 @@ def test_hash(book):
 def test_iter(book):
     # success
     assert set(book) == {
-        book['alpha.txt'],
-        book['bravo.txt'],
-        book['charlie.txt'],
+        book['alpha'], book['bravo'],  book['charlie'],
     }
 
 def test_len(book):
@@ -56,35 +58,35 @@ def test_repr(book):
 
 def test_create(book):
     # success
-    book.create('test.txt', 'test_create')
+    book.create('test', 'test_create')
     assert_zip_file(book.path, 'test.txt', 'test_create\n')
 
     # failure - existing name
     with pytest.raises(FileExistsError):
-        book.create('alpha.txt', 'test_create')
+        book.create('alpha', 'test_create')
 
 def test_exists(book):
     # success
     assert     book.exists()
     assert not Book('nope').exists()
 
-def test_get(book):
-    # success
-    assert book.get('alpha.txt', 'test') == book['alpha.txt']
-    assert book.get('nope.txt',  'test') == 'test'
-
 def test_read(book):
     # success
-    assert book.read() == {
-        'alpha.txt':   book['alpha.txt'],
-        'bravo.txt':   book['bravo.txt'],
-        'charlie.txt': book['charlie.txt'],
+    assert book.read('alpha', 'test') == book['alpha']
+    assert book.read('nope',  'test') == 'test'
+
+def test_read_dict(book):
+    # success
+    assert book.read_dict() == {
+        'alpha':   book['alpha'],
+        'bravo':   book['bravo'],
+        'charlie': book['charlie'],
     }
 
 def test_match(book):
     # success
-    assert list(book.match('alph?')) == [book['alpha.txt']]
+    assert list(book.match('alph?')) == [book['alpha']]
 
 def test_search(book):
     # success
-    assert list(book.search('alpha')) == [book['alpha.txt']]
+    assert list(book.search('alpha')) == [book['alpha']]

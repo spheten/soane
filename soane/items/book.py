@@ -21,12 +21,12 @@ class Book:
 
         self.path = path
 
-    def __contains__(self, name):
+    def __contains__(self, addr):
         '''
-        Return True if the Book contains a named Note.
+        Return True if the Book contains an existing Note.
         '''
 
-        return name in self.read()
+        return addr in self.read_dict().keys()
 
     def __eq__(self, book):
         '''
@@ -40,10 +40,13 @@ class Book:
 
     def __getitem__(self, name):
         '''
-        Return a named Note in the Book using dict syntax.
+        Return an existing Note in the Book using dict syntax.
         '''
 
-        return self.read()[name]
+        if note := self.read(name):
+            return note
+        else:
+            raise KeyError(f'name {name!r} not in zip {self.path!r}')
 
     def __hash__(self):
         '''
@@ -57,15 +60,15 @@ class Book:
         Yield each Note in the Book in alphabetical order.
         '''
 
-        key = lambda note: note.name
-        yield from sorted(self.read().values(), key=key)
+        key = lambda note: note.addr
+        yield from sorted(self.read_dict().values(), key=key)
 
     def __len__(self):
         '''
         Return the number of Notes in the Book.
         '''
 
-        return len(self.read())
+        return len(self.read_dict().values())
 
     def __repr__(self):
         '''
@@ -79,11 +82,12 @@ class Book:
         Create and return a new Note in the Book.
         '''
 
-        if tools.zips.exists(self.path, name):
-            raise FileExistsError(f'{name!r} already exists in zip {self.path!r}')
+        addr = f'{name}.txt'
+        if tools.zips.exists(self.path, addr):
+            raise FileExistsError(f'{addr!r} already exists in zip {self.path!r}')
 
-        tools.zips.append(self.path, name, body)
-        return Note(self.path, name)
+        tools.zips.create(self.path, addr, body)
+        return Note(self.path, addr)
 
     def exists(self):
         '''
@@ -92,20 +96,27 @@ class Book:
 
         return os.path.isfile(self.path)
 
-    def get(self, name, dflt=None):
+    def read(self, name, default=None):
         '''
-        Return a named Note in the Book, or a default value.
-        '''
-
-        return self.read().get(name, dflt)
-
-    def read(self):
-        '''
-        Return a '{name: Note}' dict of all Notes in the Book.
+        Return an existing Note from the Book, or a default value.
         '''
 
-        names = tools.zips.list_names(self.path)
-        return {name: Note(self.path, name) for name in names}
+        for addr in tools.zips.list_addrs(self.path):
+            if tools.path.name(addr) == name:
+                return Note(self.path, addr)
+        return default
+
+    def read_dict(self):
+        '''
+        Return a name-to-note dict of all Notes in the Book.
+        '''
+
+        return {
+            note.name: note for note in [
+                Note(self.path, addr) for addr in
+                tools.zips.list_addrs(self.path)
+            ]
+        }
 
     def match(self, glob):
         '''

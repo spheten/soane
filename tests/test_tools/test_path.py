@@ -38,10 +38,10 @@ def test_join():
     # success
     assert path.join('/dire', 'file.ext') == CLEAN
 
+def test_name():
+    # success
+    assert path.name(PATH) == 'file'
+
 def test_slug():
     # success
     assert path.slug('FILE-123!@#$') == 'file-123'
-
-def test_stem():
-    # success
-    assert path.stem(PATH) == 'file'
