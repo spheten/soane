@@ -33,7 +33,7 @@ class NameType(click.ParamType):
     A custom parameter type for Note names.
     '''
 
-    name = 'slug'
+    name = 'name'
 
     def convert(self, value, param, ctx):
         '''
