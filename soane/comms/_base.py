@@ -14,13 +14,7 @@ DEFAULT_PATH = tools.path.expand('~/.soane')
     envvar  = 'SOANE_PATH',
     default = DEFAULT_PATH,
     hidden  = True,
-    type    = click.Path(
-        exists   = True,
-        dir_okay = False,
-        readable = True,
-        writable = True,
-        resolve_path = True,
-    ),
+    type    = tools.clui.BOOK,
 )
 @click.pass_context
 def soane(ctx, path):

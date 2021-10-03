@@ -2,11 +2,31 @@
 Command-line user interface classes and functions.
 '''
 
+import os.path
+
 import click
 
 from soane import tools
 
 NAME_EXTENSION = 'txt'
+
+class BookType(click.ParamType):
+    '''
+    A custom parameter type for Book paths.
+    '''
+
+    name = 'book'
+
+    def convert(self, value, param, ctx):
+        '''
+        Convert a raw value into a Book path.
+        '''
+
+        path = tools.path.expand(value)
+        if not os.path.isfile(path):
+            self.fail(f'Book path {path!r} does not exist')
+
+        return path
 
 class NameType(click.ParamType):
     '''
@@ -22,8 +42,9 @@ class NameType(click.ParamType):
 
         slug = tools.path.slug(value)
         if slug == '':
-            self.fail(f'note name {value!r} slugs to empty string')
-        else:
-            return f'{slug}.{NAME_EXTENSION}'
+            self.fail(f'Note name {value!r} slugs to empty string')
 
+        return f'{slug}.{NAME_EXTENSION}'
+
+BOOK = BookType()
 NAME = NameType()
