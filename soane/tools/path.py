@@ -41,7 +41,7 @@ def expand(path):
     for char, func in EXPANDERS.items():
         if char in path:
             path = func(path)
-    return os.path.normpath(str(path))
+    return os.path.normpath(path)
 
 def ext(path):
     '''

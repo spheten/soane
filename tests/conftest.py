@@ -4,7 +4,11 @@ Global unit-testing fixtures and functions.
 
 import zipfile
 
+import click
 import pytest
+from click.testing import CliRunner
+
+from soane.items import Book
 
 def assert_zip_file(path, name, body):
     '''
@@ -32,6 +36,18 @@ def assert_zip_names(path, *names):
 
     with zipfile.ZipFile(path, 'r') as zobj:
         assert set(names) == set(zobj.namelist())
+
+@pytest.fixture(scope='function')
+def cli(zpath):
+    '''
+    Return a function that returns the output of a Click command.
+    '''
+
+    def func(cmd, *args):
+        runner = CliRunner()
+        result = runner.invoke(cmd, args, obj=Book(zpath))
+        return result.output.splitlines(keepends=True)
+    return func
 
 @pytest.fixture(scope='function')
 def zpath(tmpdir):
