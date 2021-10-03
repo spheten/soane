@@ -70,7 +70,7 @@ def read_all(path):
         for name in zobj.namelist():
             with zobj.open(name, 'r') as fobj:
                 zdict[name] = fobj.read().decode('utf-8')
-    return zdict
+        return zdict
 
 def write(path, name, body):
     '''

@@ -68,6 +68,11 @@ def test_exists(book):
     assert     book.exists()
     assert not Book('nope').exists()
 
+def test_get(book):
+    # success
+    assert book.get('alpha.txt', 'test') == book['alpha.txt']
+    assert book.get('nope.txt',  'test') == 'test'
+
 def test_read(book):
     # success
     assert book.read() == {

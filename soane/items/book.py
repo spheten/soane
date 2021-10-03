@@ -92,6 +92,13 @@ class Book:
 
         return os.path.isfile(self.path)
 
+    def get(self, name, dflt=None):
+        '''
+        Return a named Note in the Book, or a default value.
+        '''
+
+        return self.read().get(name, dflt)
+
     def read(self):
         '''
         Return a '{name: Note}' dict of all Notes in the Book.
