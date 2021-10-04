@@ -57,7 +57,7 @@ Create a new empty note called `NAME`.
 
 ```bash
 $ soane create dean
-# Creates 'dean.<ext>' in your notes directory.
+# Creates the empty file 'dean.<ext>' in your notes directory.
 ```
 
 ### list GLOB
@@ -75,6 +75,15 @@ sookie
 $ soane list l*
 lorelai
 luke
+```
+
+### open NAME
+
+Open a note in your default text editor.
+
+```bash
+$ soane open emily
+# Opens 'emily.<ext>' in your default editor for SOANE_EXT.
 ```
 
 ### read NAME

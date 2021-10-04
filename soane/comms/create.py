@@ -22,4 +22,4 @@ def create(book, name):
     if name not in book:
         book.create(name)
     else:
-        raise click.UsageError(f'The note {name!r} already exists.')
+        click.echo(f'Error: The note {name!r} already exists.')

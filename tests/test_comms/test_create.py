@@ -12,4 +12,6 @@ def test_read(cli):
 
     # failure - existing note
     book, outs = cli(create, 'alpha')
-    assert "The note 'alpha' already exists." in outs[-1]
+    assert outs == [
+        "Error: The note 'alpha' already exists.\n",
+    ]

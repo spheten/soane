@@ -4,7 +4,7 @@ Tests for 'soane.comms.list'.
 
 from soane.comms.list import list_
 
-def test_read(cli):
+def test_list_(cli):
     # success - default GLOB
     book, outs = cli(list_)
     assert outs == ['alpha\n', 'bravo\n', 'charlie\n']
