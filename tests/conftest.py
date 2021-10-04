@@ -15,8 +15,11 @@ def cli(temp_dire):
     '''
 
     def func(comm, *args):
-        runner = CliRunner()
-        result = runner.invoke(comm, args, obj=Book(temp_dire))
+        obj    = Book(temp_dire, 'txt')
+        result = CliRunner().invoke(comm, args, obj=obj, env={
+            'SOANE_DIR': temp_dire,
+            'SOANE_EXT': 'txt',
+        })
         return result.output.splitlines(keepends=True)
     return func
 

@@ -9,7 +9,7 @@ from soane.items.note import Note
 
 @pytest.fixture(scope='function')
 def book(temp_dire):
-    return Book(temp_dire)
+    return Book(temp_dire, 'txt')
 
 def test_init(book):
     # success
@@ -23,7 +23,7 @@ def test_contains(book):
 def test_eq(book):
     # success
     assert book == book
-    assert Book != Book('nope')
+    assert Book != Book('nope', 'txt')
     assert Book != 'not a Book'
 
 def test_getitem(book):
@@ -63,7 +63,7 @@ def test_create(book):
 def test_exists(book):
     # success
     assert book.exists()
-    assert not Book('/nope').exists()
+    assert not Book('/nope', 'txt').exists()
 
 def test_read(book):
     # success

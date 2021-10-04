@@ -10,23 +10,22 @@ class Book:
     A directory containing plaintext Notes.
     '''
 
-    __slots__ = ['dire']
-    note_ext  = 'txt'
+    __slots__ = ['dire', 'ext']
 
-    def __init__(self, path):
+    def __init__(self, path, ext):
         '''
         Initialise a new Book.
         '''
 
         self.dire = tools.path.clean(path)
+        self.ext  = str(ext).strip().lstrip('.')
 
     def __contains__(self, name):
         '''
         Return True if the Book contains a Note.
         '''
 
-        base = f'{name}.{self.__class__.note_ext}'
-        path = tools.path.join(self.dire, base)
+        path = tools.path.join(self.dire, f'{name}.{self.ext}')
         return tools.file.exists(path)
 
     def __eq__(self, book):
@@ -61,8 +60,7 @@ class Book:
         Yield each Note in the Book.
         '''
 
-        term = f'*.{self.__class__.note_ext}'
-        for path in tools.file.glob(self.dire, term):
+        for path in tools.file.glob(self.dire, f'*.{self.ext}'):
             yield Note(path)
 
     def __len__(self):
@@ -84,8 +82,7 @@ class Book:
         Create and return a new Note in the Book.
         '''
 
-        base = f'{name}.{self.__class__.note_ext}'
-        path = tools.path.join(self.dire, base)
+        path = tools.path.join(self.dire, f'{name}.{self.ext}')
 
         if tools.file.exists(path):
             raise FileExistsError(f'Note file {path} already exists')
@@ -106,8 +103,7 @@ class Book:
         Return a Note from the Book, or a default value.
         '''
 
-        base = f'{name}.{self.__class__.note_ext}'
-        path = tools.path.join(self.dire, base)
+        path = tools.path.join(self.dire, f'{name}.{self.ext}')
 
         if tools.file.exists(path):
             return Note(path)

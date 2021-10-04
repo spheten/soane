@@ -2,10 +2,40 @@
 Tests for 'soane.comms._base'.
 '''
 
-from soane.comms import _base
+import os
 
-def test_group(cli):
+import click
+from click.testing import CliRunner
+
+from soane.comms import _base
+from soane.items import Book
+
+def test_group(cli, temp_dire):
+    # setup
+    @_base.group.command()
+    @click.pass_context
+    def test(ctx):
+        assert isinstance(ctx.obj, Book)
+        assert ctx.obj.dire == temp_dire
+        assert ctx.obj.ext  == 'txt'
+
     # success
-    assert cli(_base.group, 'read', 'alpha') == [
-        'Alpha note.\n',
-    ]
+    result = CliRunner().invoke(_base.group, ['test'], env={
+        'SOANE_DIR': temp_dire,
+        'SOANE_EXT': 'txt',
+    })
+    assert result.exit_code == 0
+
+    # failure - missing SOANE_DIR
+    result = CliRunner().invoke(_base.group, ['test'], env={
+        'SOANE_DIR': '',
+        'SOANE_EXT': 'txt',
+    })
+    assert result.exit_code == 2
+
+    # failure - missing SOANE_EXT
+    result = CliRunner().invoke(_base.group, ['test'], env={
+        'SOANE_DIR': temp_dire,
+        'SOANE_EXT': '',
+    })
+    assert result.exit_code == 2
