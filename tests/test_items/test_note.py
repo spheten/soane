@@ -5,16 +5,14 @@ Tests for 'soane.items.note'.
 import pytest
 
 from soane.items.note import Note
-from tests.conftest   import assert_zip_file
 
 @pytest.fixture(scope='function')
-def note(zpath):
-    return Note(zpath, 'alpha.txt')
+def note(temp_dire):
+    return Note(temp_dire + '/alpha.txt')
 
 def test_init(note):
     # success
-    assert note.path
-    assert note.addr == 'alpha.txt'
+    assert note.path.endswith('alpha.txt')
     assert note.name == 'alpha'
 
 def test_contains(note):
@@ -25,7 +23,7 @@ def test_contains(note):
 def test_eq(note):
     # success
     assert note == note
-    assert note != Note('nope.zip', 'nope.txt')
+    assert note != Note('/nope.txt')
     assert note != 'not a Note'
 
 def test_hash(note):
@@ -42,15 +40,15 @@ def test_len(note):
 
 def test_repr(note):
     # setup
-    note.path = '/test.zip'
+    note.path = '/alpha.txt'
 
     # success
-    assert repr(note) == "Note('/test.zip', 'alpha.txt')"
+    assert repr(note) == "Note('/alpha.txt')"
 
 def test_exists(note):
     # success
     assert note.exists()
-    assert not Note(note.path, 'nope').exists()
+    assert not Note('/nope.txt').exists()
 
 def test_match(note):
     # success
@@ -66,7 +64,7 @@ def test_search(note):
     assert note.search('alpha')
     assert not note.search('nope')
 
-def test_update(note):
+def test_write(note):
     # success
-    note.update('test_update')
-    assert_zip_file(note.path, 'alpha.txt', 'test_update\n')
+    note.write('test_write')
+    assert note.read() == 'test_write\n'

@@ -4,25 +4,22 @@ Class definition for 'Note'.
 
 import fnmatch
 
-from soane            import tools
-from soane.items.zipf import ZipFile
+from soane import tools
 
 class Note:
     '''
-    A plaintext note in a ZipFile.
+    A plaintext note file in a directory.
     '''
 
-    __slots__ = ['path', 'zipf', 'addr', 'name']
+    __slots__ = ['path', 'name']
 
-    def __init__(self, path, addr):
+    def __init__(self, path):
         '''
         Initialise a new Note.
         '''
 
         self.path = tools.path.clean(path)
-        self.zipf = ZipFile(self.path)
-        self.addr = tools.path.clean(addr)
-        self.name = tools.path.name(addr)
+        self.name = tools.path.name(self.path)
 
     def __contains__(self, string):
         '''
@@ -39,7 +36,6 @@ class Note:
         return all([
             isinstance(note, Note),
             self.path == getattr(note, 'path', None),
-            self.addr == getattr(note, 'addr', None),
         ])
 
     def __hash__(self):
@@ -47,7 +43,7 @@ class Note:
         Return the Note's unique hash code.
         '''
 
-        return hash('Note:' + self.path + self.addr)
+        return hash('Note:' + self.path)
 
     def __iter__(self):
         '''
@@ -68,14 +64,14 @@ class Note:
         Return the Note as a code-representative string.
         '''
 
-        return f'Note({self.path!r}, {self.addr!r})'
+        return f'Note({self.path!r})'
 
     def exists(self):
         '''
         Return True if the Note exists in the zipfile.
         '''
 
-        return self.addr in self.zipf
+        return tools.file.exists(self.path)
 
     def match(self, glob):
         '''
@@ -89,7 +85,7 @@ class Note:
         Return the Note's body as a string.
         '''
 
-        return self.zipf.read(self.addr)
+        return tools.file.read(self.path)
 
     def search(self, text):
         '''
@@ -98,9 +94,9 @@ class Note:
 
         return text.lower().strip() in self.read().lower()
 
-    def update(self, body):
+    def write(self, body):
         '''
         Overwrite the Note's body with a string.
         '''
 
-        self.zipf.update(self.addr, body)
+        tools.file.write(self.path, body)
