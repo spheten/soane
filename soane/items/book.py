@@ -4,30 +4,31 @@ Class definition for 'Book'.
 
 from soane            import tools
 from soane.items.note import Note
-from soane.items.zipf import ZipFile
 
 class Book:
     '''
     A ZipFile containing plaintext Notes.
     '''
 
-    addr_ext  = 'txt'
-    __slots__ = ['path', 'zipf']
+    __slots__ = ['dire']
+    note_ext  = 'txt'
 
     def __init__(self, path):
         '''
         Initialise a new Book.
         '''
 
-        self.path = tools.path.clean(path)
-        self.zipf = ZipFile(self.path)
+        self.dire = tools.path.clean(path)
 
     def __contains__(self, name):
         '''
         Return True if the Book contains a Note.
         '''
 
-        return self.addr(name) in self.zipf
+        for note in self:
+            if name == note.name:
+                return True
+        return False
 
     def __eq__(self, book):
         '''
@@ -36,7 +37,7 @@ class Book:
 
         return all([
             isinstance(book, Book),
-            self.path == getattr(book, 'path', None),
+            self.dire == getattr(book, 'dire', None),
         ])
 
     def __getitem__(self, name):
@@ -47,73 +48,62 @@ class Book:
         if name in self:
             return self.read(name)
         else:
-            raise tools.errs.addr_not_exists(self.path, self.addr(name))
+            raise KeyError(name)
 
     def __hash__(self):
         '''
         Return the Book's unique hash code.
         '''
 
-        return hash('Book:' + self.path)
+        return hash('Book:' + self.dire)
 
     def __iter__(self):
         '''
         Yield each Note in the Book.
         '''
 
-        for addr in self.zipf:
-            yield Note(self.path, addr)
+        term = f'*.{self.__class__.note_ext}'
+        for path in tools.file.glob(self.dire, term):
+            yield Note(path)
 
     def __len__(self):
         '''
         Return the number of Notes in the Book.
         '''
 
-        return len(self.zipf)
+        return len(list(self.__iter__()))
 
     def __repr__(self):
         '''
         Return the Book as a code-representative string.
         '''
 
-        return f'Book({self.path!r})'
-
-    def addr(self, name):
-        '''
-        Return a Note name as a ZipFile address.
-        '''
-
-        name = tools.path.slug(name)
-        return f'{name}.{self.__class__.addr_ext}'
+        return f'Book({self.dire!r})'
 
     def create(self, name, body):
         '''
         Create and return a new Note in the Book.
         '''
 
-        addr = self.addr(name)
-        if addr in self.zipf:
-            raise tools.errs.addr_exists(self.path, addr)
+        base = f'{name}.{self.__class__.note_ext}'
+        path = tools.path.join(self.dire, base)
 
-        self.zipf.create(addr, body)
-        return Note(self.path, addr)
+        if name in self:
+            raise FileExistsError(f'file {path} already exists')
+
+        note = Note(path)
+        note.write(body)
+        return note
 
     def read(self, name, default=None):
         '''
         Return a Note from the Book, or a default value.
         '''
 
-        addr = self.addr(name)
-        if addr in self.zipf:
-            return Note(self.path, addr)
+        for note in self:
+            if note.name == name:
+                return note
         return default
-
-    def read_dict(self):
-        '''
-        Return a name-to-note dict of all Notes in the Book.
-        '''
-
-        return {note.name: note for note in self}
 
     def match(self, glob):
         '''

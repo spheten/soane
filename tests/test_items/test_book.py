@@ -6,15 +6,14 @@ import pytest
 
 from soane.items.book import Book
 from soane.items.note import Note
-from tests.conftest   import assert_zip_file
 
 @pytest.fixture(scope='function')
-def book(zpath):
-    return Book(zpath)
+def book(temp_dire):
+    return Book(temp_dire)
 
 def test_init(book):
     # success
-    assert book.path
+    assert book.dire
 
 def test_contains(book):
     # success
@@ -29,7 +28,7 @@ def test_eq(book):
 
 def test_getitem(book):
     # success
-    assert book['alpha'] == book.read_dict()['alpha']
+    assert book['alpha'] == Note(book.dire + '/alpha.txt')
 
 def test_hash(book):
     # success
@@ -47,15 +46,15 @@ def test_len(book):
 
 def test_repr(book):
     # setup
-    book.path = '/test.zip'
+    book.dire = '/dire'
 
     # success
-    assert repr(book) == "Book('/test.zip')"
+    assert repr(book) == "Book('/dire')"
 
 def test_create(book):
     # success
-    book.create('test', 'test_create')
-    assert_zip_file(book.path, 'test.txt', 'test_create\n')
+    note = book.create('delta', 'test_create')
+    assert note.read() == 'test_create\n'
 
     # failure - existing name
     with pytest.raises(FileExistsError):
@@ -65,14 +64,6 @@ def test_read(book):
     # success
     assert book.read('alpha', 'test') == book['alpha']
     assert book.read('nope',  'test') == 'test'
-
-def test_read_dict(book):
-    # success
-    assert book.read_dict() == {
-        'alpha':   book['alpha'],
-        'bravo':   book['bravo'],
-        'charlie': book['charlie'],
-    }
 
 def test_match(book):
     # success
