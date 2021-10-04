@@ -7,7 +7,7 @@ from soane.items.note import Note
 
 class Book:
     '''
-    A ZipFile containing plaintext Notes.
+    A directory containing plaintext Notes.
     '''
 
     __slots__ = ['dire']
@@ -25,10 +25,9 @@ class Book:
         Return True if the Book contains a Note.
         '''
 
-        for note in self:
-            if name == note.name:
-                return True
-        return False
+        base = f'{name}.{self.__class__.note_ext}'
+        path = tools.path.join(self.dire, base)
+        return tools.file.exists(path)
 
     def __eq__(self, book):
         '''
@@ -88,21 +87,30 @@ class Book:
         base = f'{name}.{self.__class__.note_ext}'
         path = tools.path.join(self.dire, base)
 
-        if name in self:
-            raise FileExistsError(f'file {path} already exists')
+        if tools.file.exists(path):
+            raise FileExistsError(f'Note file {path} already exists')
 
         note = Note(path)
         note.write(body)
         return note
+
+    def exists(self):
+        '''
+        Return True if the Book's directory exists.
+        '''
+
+        return tools.file.exists(self.dire, dire=True)
 
     def read(self, name, default=None):
         '''
         Return a Note from the Book, or a default value.
         '''
 
-        for note in self:
-            if note.name == name:
-                return note
+        base = f'{name}.{self.__class__.note_ext}'
+        path = tools.path.join(self.dire, base)
+
+        if tools.file.exists(path):
+            return Note(path)
         return default
 
     def match(self, glob):

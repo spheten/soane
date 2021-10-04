@@ -9,14 +9,14 @@ from click.testing import CliRunner
 from soane.items import Book
 
 @pytest.fixture(scope='function')
-def cli(zpath):
+def cli(temp_dire):
     '''
     Return a function that returns the output of a Click command.
     '''
 
     def func(comm, *args):
         runner = CliRunner()
-        result = runner.invoke(comm, args, obj=Book(zpath))
+        result = runner.invoke(comm, args, obj=Book(temp_dire))
         return result.output.splitlines(keepends=True)
     return func
 

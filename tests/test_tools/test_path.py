@@ -6,20 +6,19 @@ import os
 
 from soane.tools import path
 
-PATH  = '/dire/file.ext'
-CLEAN = PATH.replace('/', os.sep)
+p = os.path.normpath
 
 def test_base():
     # success
-    assert path.base(PATH) == 'file.ext'
+    assert path.base('/dire/file.ext') == 'file.ext'
 
 def test_clean():
     # success
-    assert path.clean(PATH) == CLEAN
+    assert path.clean('/dire/file.ext') == p('/dire/file.ext')
 
 def test_dire():
     # success
-    assert path.dire(PATH) == '/dire'
+    assert path.dire('/dire/file.ext') == '/dire'
 
 def test_exists():
     # success
@@ -33,20 +32,16 @@ def test_expand():
     os.environ['USERPROFILE'] = '/dire'
 
     # success
-    assert path.expand('~/$FILE') == CLEAN
+    assert path.expand('~/$FILE') == p('/dire/file.ext')
 
 def test_ext():
     # success
-    assert path.ext(PATH) == 'ext'
+    assert path.ext('/dire/file.ext') == 'ext'
 
 def test_join():
     # success
-    assert path.join('/dire', 'file.ext') == CLEAN
+    assert path.join('/dire', 'file.ext') == p('/dire/file.ext')
 
 def test_name():
     # success
-    assert path.name(PATH) == 'file'
-
-def test_slug():
-    # success
-    assert path.slug('FILE-123!@#$') == 'file-123'
+    assert path.name('/dire/file.ext') == 'file'

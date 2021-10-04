@@ -66,5 +66,5 @@ def test_search(note):
 
 def test_write(note):
     # success
-    note.write('test_write')
-    assert note.read() == 'test_write\n'
+    note.write('body')
+    assert note.read() == 'body\n'

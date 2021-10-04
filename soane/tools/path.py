@@ -72,11 +72,3 @@ def name(path):
 
     base = os.path.basename(path)
     return os.path.splitext(base)[0]
-
-def slug(name):
-    '''
-    Return a name string as a slug string.
-    '''
-
-    name = name.lower().strip()
-    return ''.join(char for char in name if char in SLUG_CHARS)

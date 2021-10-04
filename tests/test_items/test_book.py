@@ -53,17 +53,22 @@ def test_repr(book):
 
 def test_create(book):
     # success
-    note = book.create('delta', 'test_create')
-    assert note.read() == 'test_create\n'
+    note = book.create('test', 'body')
+    assert note.read() == 'body\n'
 
     # failure - existing name
     with pytest.raises(FileExistsError):
-        book.create('alpha', 'test_create')
+        book.create('alpha', 'body')
+
+def test_exists(book):
+    # success
+    assert book.exists()
+    assert not Book('/nope').exists()
 
 def test_read(book):
     # success
-    assert book.read('alpha', 'test') == book['alpha']
-    assert book.read('nope',  'test') == 'test'
+    assert book.read('alpha', 'default') == book['alpha']
+    assert book.read('nope',  'default') == 'default'
 
 def test_match(book):
     # success

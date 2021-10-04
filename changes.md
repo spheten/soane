@@ -8,7 +8,7 @@ Changes
 - Command abbreviations.
 
 ### Changed
-- Rewrote zipfile functions as `ZipFile` wrapper class.
+- Rewrote application to use plaintext flatfile notes.
 
 [0.1.0] · 2021-10-03
 --------------------

@@ -8,15 +8,15 @@ from soane.tools import file
 
 def test_create(tmpdir):
     # setup
-    path = tmpdir.join('test_create.txt')
+    path = tmpdir.join('test.txt')
 
     # success
-    file.create(path, 'test_create')
-    assert path.read() == 'test_create\n'
+    file.create(path, 'body')
+    assert path.read() == 'body\n'
 
 def test_delete(tmpdir):
     # setup
-    path = tmpdir.join('test_delete.txt')
+    path = tmpdir.join('test.txt')
     path.write('')
 
     # success
@@ -25,17 +25,18 @@ def test_delete(tmpdir):
 
 def test_duplicate(tmpdir):
     # setup
-    orig = tmpdir.join('test_duplicate_orig')
-    dest = tmpdir.join('test_duplicate_dest')
+    orig = tmpdir.join('orig.txt')
+    dest = tmpdir.join('dest.txt')
     orig.write('')
 
     # success
-    file.duplicate(orig, 'test_duplicate_dest')
+    file.duplicate(orig, 'dest')
+    assert orig.isfile()
     assert dest.isfile()
 
 def test_exists(tmpdir):
     # setup
-    path = tmpdir.join('test_exists.txt')
+    path = tmpdir.join('test.txt')
     path.write('')
 
     # success
@@ -56,27 +57,27 @@ def test_glob(tmpdir):
 
 def test_read(tmpdir):
     # setup
-    path = tmpdir.join('test_read.txt')
-    path.write('test_read')
+    path = tmpdir.join('test.txt')
+    path.write('body')
 
     # success
-    assert file.read(path) == 'test_read\n'
+    assert file.read(path) == 'body\n'
 
 def test_rename(tmpdir):
     # setup
-    orig = tmpdir.join('test_duplicate_orig')
-    dest = tmpdir.join('test_duplicate_dest')
+    orig = tmpdir.join('orig.txt')
+    dest = tmpdir.join('dest.txt')
     orig.write('')
 
     # success
-    file.rename(orig, 'test_duplicate_dest')
-    assert dest.isfile()
+    file.rename(orig, 'dest')
     assert not orig.isfile()
+    assert dest.isfile()
 
 def test_write(tmpdir):
     # setup
-    path = tmpdir.join('test_write.txt')
+    path = tmpdir.join('test.txt')
 
     # success
-    file.write(path, 'test_write')
-    assert path.read() == 'test_write\n'
+    file.write(path, 'body')
+    assert path.read() == 'body\n'
