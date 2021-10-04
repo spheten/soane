@@ -20,4 +20,4 @@ def read(book, name):
     '''
 
     if note := book.read(name):
-        click.echo(note.read().strip() + '\n')
+        click.echo(note.read().strip())
