@@ -55,7 +55,7 @@ Usage
 
 Create a new empty note called `NAME`.
 
-```text
+```bash
 $ soane create dean
 # Creates 'dean.<ext>' in your notes directory.
 ```
