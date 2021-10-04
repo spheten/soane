@@ -7,11 +7,15 @@ Soane
 [![](https://img.shields.io/pypi/l/soane)][li]
 [![](https://img.shields.io/github/issues-raw/spheten/soane)][is]
 
-**Soane** (*Stephen's Old-Ass Note Engine*) is a command-line note manager, written and developed by Stephen Malone.
+**Soane** (*Stephen's Old-Ass Note Engine*) is a command-line note manager, written and developed by Stephen Malone. Elevator pitch: it's a CLI made of CRUD for your TXTs.
 
-It's a deliberately crude system: the database is a single zip archive, the notes are all plaintext files and the commands are all braindead obvious. No magic, no sugar, no configuration, no nonsense.
+It's a deliberately simple system:
 
-If you just want to slap some CRUD on your notes and not bother with all that GUI nonsense, then Soane is for you. It's note-taking software for people who hate note-taking software.
+- **Your notes** are plaintext files kept in a single directory of your choosing.
+- **The configuration** is two easy environment variables.
+- **The commands** are braindead obvious and super handy.
+
+Why use this? If you like text files but hate staring at the file manager, if you want to record information and actually find it later, if you have "summon terminal" bound to a keystroke, then Soane is for you.
 
 Installation
 ------------
@@ -27,7 +31,17 @@ or manually download the [latest release][la].
 Setup
 -----
 
-**TODO:** Describe zipfile concepts and setup process.
+Soane only requires two basic environment variables for configuration:
+
+```bash
+# The path to your notes directory. Tildes and variables welcome.
+SOANE_DIR = "~/path/to/notes"
+
+# The extension your note files use. No leading dot, please.
+SOANE_EXT = "txt"
+```
+
+Set these variables wherever you need to. On Windows, go to System Properties or search for "environment variables" in Start; on Linux and Mac you'll need to edit a dotfile in your home directory.
 
 Usage
 -----
