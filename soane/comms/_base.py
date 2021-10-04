@@ -1,5 +1,5 @@
 '''
-Command group definition for 'soane'.
+Click command group definition.
 '''
 
 import click
@@ -9,7 +9,9 @@ from soane       import tools
 
 DEFAULT_PATH = tools.path.expand('~/.soane')
 
-@click.group(cls=tools.clui.AbbrGroup)
+@click.group(
+    cls = tools.clui.AbbrGroup,
+)
 @click.option('--path',
     envvar  = 'SOANE_PATH',
     default = DEFAULT_PATH,
@@ -17,7 +19,7 @@ DEFAULT_PATH = tools.path.expand('~/.soane')
     type    = tools.clui.BOOK,
 )
 @click.pass_context
-def soane(ctx, path):
+def group(ctx, path):
     '''
     Soane: Stephen's Old-Ass Note Engine.
     '''
