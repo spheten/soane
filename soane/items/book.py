@@ -24,12 +24,12 @@ class Book:
         self.path = tools.path.clean(path)
         self.zipf = ZipFile(self.path)
 
-    def __contains__(self, addr):
+    def __contains__(self, name):
         '''
         Return True if the Book contains a Note.
         '''
 
-        return f'{addr}.txt' in self.zipf
+        return self.addr(name) in self.zipf
 
     def __eq__(self, book):
         '''
