@@ -4,22 +4,24 @@ Class definition for 'Note'.
 
 import fnmatch
 
-from soane import tools
+from soane            import tools
+from soane.items.zipf import ZipFile
 
 class Note:
     '''
     A plaintext note file in a zipfile.
     '''
 
-    __slots__ = ['path', 'addr', 'name']
+    __slots__ = ['path', 'zipf', 'addr', 'name']
 
     def __init__(self, path, addr):
         '''
         Initialise a new Note.
         '''
 
-        self.path = path
-        self.addr = addr
+        self.path = tools.path.clean(path)
+        self.zipf = ZipFile(self.path)
+        self.addr = tools.path.clean(addr)
         self.name = tools.path.name(addr)
 
     def __eq__(self, note):
@@ -66,7 +68,7 @@ class Note:
         Return True if the Note exists in the zipfile.
         '''
 
-        return tools.zips.exists(self.path, self.addr)
+        return self.zipf.exists(self.addr)
 
     def match(self, glob):
         '''
@@ -80,7 +82,7 @@ class Note:
         Return the Note's body as a string.
         '''
 
-        return tools.zips.read(self.path, self.addr)
+        return self.zipf.read(self.addr)
 
     def search(self, text):
         '''
@@ -94,4 +96,4 @@ class Note:
         Overwrite the Note's body with a string.
         '''
 
-        tools.zips.update(self.path, self.addr, body)
+        self.zipf.update(self.addr, body)

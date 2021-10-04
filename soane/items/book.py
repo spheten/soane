@@ -6,27 +6,30 @@ import os.path
 
 from soane            import tools
 from soane.items.note import Note
+from soane.items.zipf import ZipFile
 
 class Book:
     '''
     A zipfile containing plaintext Notes.
     '''
 
-    __slots__ = ['path']
+    addr_ext  = 'txt'
+    __slots__ = ['path', 'zipf']
 
     def __init__(self, path):
         '''
         Initialise a new Book.
         '''
 
-        self.path = path
+        self.path = tools.path.clean(path)
+        self.zipf = ZipFile(self.path)
 
     def __contains__(self, addr):
         '''
         Return True if the Book contains a Note.
         '''
 
-        return addr in self.read_dict().keys()
+        return f'{addr}.txt' in self.zipf
 
     def __eq__(self, book):
         '''
@@ -40,13 +43,13 @@ class Book:
 
     def __getitem__(self, name):
         '''
-        Return a Note in the Book using dict syntax.
+        Return a Note from the Book using dict syntax.
         '''
 
-        if note := self.read(name):
-            return note
+        if name in self:
+            return self.read(name)
         else:
-            raise KeyError(f'name {name!r} not in zip {self.path!r}')
+            raise tools.errs.addr_not_exists(self.path, self.addr(name))
 
     def __hash__(self):
         '''
@@ -60,7 +63,7 @@ class Book:
         Yield each Note in the Book.
         '''
 
-        for addr in tools.zips.list_addrs(self.path):
+        for addr in self.zipf:
             yield Note(self.path, addr)
 
     def __len__(self):
@@ -68,7 +71,7 @@ class Book:
         Return the number of Notes in the Book.
         '''
 
-        return len(self.read_dict().values())
+        return len(self.zipf)
 
     def __repr__(self):
         '''
@@ -77,33 +80,41 @@ class Book:
 
         return f'Book({self.path!r})'
 
+    def addr(self, name):
+        '''
+        Return a Note name as a ZipFile address.
+        '''
+
+        name = tools.path.slug(name)
+        return f'{name}.{self.__class__.addr_ext}'
+
     def create(self, name, body):
         '''
         Create and return a new Note in the Book.
         '''
 
-        addr = f'{name}.txt'
-        if tools.zips.exists(self.path, addr):
+        addr = self.addr(name)
+        if self.zipf.exists(addr):
             raise tools.errs.addr_exists(self.path, addr)
 
-        tools.zips.create(self.path, addr, body)
+        self.zipf.create(addr, body)
         return Note(self.path, addr)
 
-    def exists(self):
+    def exists(self, name):
         '''
-        Return True if the Book's zipfile exists on disk.
+        Return True if a Note exists in the Book.
         '''
 
-        return os.path.isfile(self.path)
+        return self.addr(name) in self.zipf
 
     def read(self, name, default=None):
         '''
         Return a Note from the Book, or a default value.
         '''
 
-        for addr in tools.zips.list_addrs(self.path):
-            if tools.path.name(addr) == name:
-                return Note(self.path, addr)
+        addr = self.addr(name)
+        if self.zipf.exists(addr):
+            return Note(self.path, addr)
         return default
 
     def read_dict(self):

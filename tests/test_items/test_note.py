@@ -44,12 +44,12 @@ def test_repr(note):
 
 def test_exists(note):
     # success
-    assert     note.exists()
+    assert note.exists()
     assert not Note(note.path, 'nope').exists()
 
 def test_match(note):
     # success
-    assert     note.match('alph?')
+    assert note.match('alph?')
     assert not note.match('nope')
 
 def test_read(note):
@@ -58,10 +58,10 @@ def test_read(note):
 
 def test_search(note):
     # success
-    assert     note.search('alpha')
+    assert note.search('alpha')
     assert not note.search('nope')
 
 def test_update(note):
     # success
-    note.update('test_write')
-    assert_zip_file(note.path, 'alpha.txt', 'test_write\n')
+    note.update('test_update')
+    assert_zip_file(note.path, 'alpha.txt', 'test_update\n')

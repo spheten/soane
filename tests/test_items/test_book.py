@@ -18,8 +18,8 @@ def test_init(book):
 
 def test_contains(book):
     # success
-    assert     'alpha' in book
-    assert not 'nope'  in book
+    assert 'alpha' in book
+    assert 'nope' not in book
 
 def test_eq(book):
     # success
@@ -30,10 +30,6 @@ def test_eq(book):
 def test_getitem(book):
     # success
     assert book['alpha'] == book.read_dict()['alpha']
-
-    # failure - nonexistent note
-    with pytest.raises(KeyError):
-        book['nope']
 
 def test_hash(book):
     # success
@@ -67,8 +63,8 @@ def test_create(book):
 
 def test_exists(book):
     # success
-    assert     book.exists()
-    assert not Book('nope').exists()
+    assert book.exists('alpha')
+    assert not book.exists('nope')
 
 def test_read(book):
     # success
