@@ -51,6 +51,15 @@ Usage
 - Commands can be abbreviated, so `soane r foo` will automatically expand to `soane read foo`.
 - Notes are referenced by their basename, so a file named `notes/foo.txt` is called `foo` in Soane.
 
+### create NAME
+
+Create a new empty note called `NAME`.
+
+```text
+$ soane create dean
+# Creates 'dean.<ext>' in your notes directory.
+```
+
 ### list GLOB
 
 Print the names of all notes, or notes matching `GLOB` (default `*`).
@@ -74,7 +83,7 @@ Print the contents of a note, if it exists.
 
 ```text
 $ soane read lorelai
-"I don't like Mondays, but unfortunately they come around eventually."
+“As long as everything is exactly the way I want it, I'm totally flexible.”
 - Lorelai Gilmore
 ```
 
