@@ -9,7 +9,9 @@ from soane.comms._base import group
 @group.command(
     name       = 'list',
     short_help = 'List notes.',
+    add_help_option = False,
 )
+@click.help_option('-h', '--help')
 @click.argument('glob',
     default  = '*',
     required = False,

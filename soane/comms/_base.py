@@ -6,11 +6,17 @@ import os
 
 import click
 
-from soane.items import Book
 from soane       import tools
+from soane       import VERSION_STRING
+from soane.items import Book
 
 @click.group(
     cls = tools.clui.AbbrGroup,
+    add_help_option = False,
+)
+@click.help_option('-h', '--help')
+@click.version_option('', '-v', '--version',
+    message = VERSION_STRING,
 )
 @click.pass_context
 def group(ctx):
