@@ -43,9 +43,9 @@ def cli(zpath):
     Return a function that returns the output of a Click command.
     '''
 
-    def func(cmd, *args):
+    def func(comm, *args):
         runner = CliRunner()
-        result = runner.invoke(cmd, args, obj=Book(zpath))
+        result = runner.invoke(comm, args, obj=Book(zpath))
         return result.output.splitlines(keepends=True)
     return func
 

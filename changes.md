@@ -4,6 +4,9 @@ Changes
 [Unreleased]
 ------------
 
+### Added
+- Command abbreviations.
+
 ### Changed
 - Rewrote zipfile functions as `ZipFile` wrapper class.
 

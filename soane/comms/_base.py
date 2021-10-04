@@ -9,7 +9,7 @@ from soane       import tools
 
 DEFAULT_PATH = tools.path.expand('~/.soane')
 
-@click.group()
+@click.group(cls=tools.clui.AbbrGroup)
 @click.option('--path',
     envvar  = 'SOANE_PATH',
     default = DEFAULT_PATH,
