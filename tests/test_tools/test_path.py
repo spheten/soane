@@ -21,6 +21,11 @@ def test_dire():
     # success
     assert path.dire(PATH) == '/dire'
 
+def test_exists():
+    # success
+    assert path.exists(__file__)
+    assert not path.exists('/nope.txt')
+
 def test_expand():
     # setup
     os.environ['HOME'] = '/dire'

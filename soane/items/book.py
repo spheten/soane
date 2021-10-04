@@ -2,8 +2,6 @@
 Class definition for 'Book'.
 '''
 
-import os.path
-
 from soane            import tools
 from soane.items.note import Note
 from soane.items.zipf import ZipFile

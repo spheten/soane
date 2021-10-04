@@ -2,8 +2,6 @@
 Command-line user interface classes and functions.
 '''
 
-import os.path
-
 import click
 
 from soane import tools
@@ -21,7 +19,7 @@ class BookType(click.ParamType):
         '''
 
         path = tools.path.expand(value)
-        if not os.path.isfile(path):
+        if not tools.path.exists(path):
             self.fail(f'Book path {path!r} does not exist')
 
         return path

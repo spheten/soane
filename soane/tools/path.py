@@ -43,6 +43,13 @@ def expand(path):
             path = func(path)
     return os.path.normpath(path)
 
+def exists(path):
+    '''
+    Return True if a path exists on disk.
+    '''
+
+    return os.path.isfile(path)
+
 def ext(path):
     '''
     Return a path's extension, without the dot.
