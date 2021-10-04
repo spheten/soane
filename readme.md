@@ -3,7 +3,7 @@ Soane
 
 [![](https://img.shields.io/github/last-commit/spheten/soane)][co]
 [![](https://img.shields.io/pypi/pyversions/soane)][pp]
-[![](https://img.shields.io/pypi/v/soane)][pp]
+[![](https://img.shields.io/pypi/v/soane)][ch]
 [![](https://img.shields.io/pypi/l/soane)][li]
 [![](https://img.shields.io/github/issues-raw/spheten/soane)][is]
 
@@ -12,9 +12,6 @@ Soane
 It's a deliberately crude system: the database is a single zip archive, the notes are all plaintext files and the commands are all braindead obvious. No magic, no sugar, no configuration, no nonsense.
 
 If you just want to slap some CRUD on your notes and not bother with all that GUI nonsense, then Soane is for you. It's note-taking software for people who hate note-taking software.
-
-- See [changes.md][ch] for development changes.
-- See [license.md][li] for licensing information.
 
 Installation
 ------------
