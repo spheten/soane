@@ -77,9 +77,9 @@ class Book:
 
         return f'Book({self.dire!r})'
 
-    def create(self, name, body):
+    def create(self, name):
         '''
-        Create and return a new Note in the Book.
+        Create and return a new empty Note in the Book.
         '''
 
         path = tools.path.join(self.dire, f'{name}.{self.ext}')
@@ -88,7 +88,7 @@ class Book:
             raise FileExistsError(f'Note file {path} already exists')
 
         note = Note(path)
-        note.write(body)
+        note.write('')
         return note
 
     def exists(self):

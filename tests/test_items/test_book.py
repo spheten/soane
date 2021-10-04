@@ -53,12 +53,12 @@ def test_repr(book):
 
 def test_create(book):
     # success
-    note = book.create('test', 'body')
-    assert note.read() == 'body\n'
+    note = book.create('test')
+    assert note.exists()
 
     # failure - existing name
     with pytest.raises(FileExistsError):
-        book.create('alpha', 'body')
+        book.create('alpha')
 
 def test_exists(book):
     # success

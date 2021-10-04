@@ -6,6 +6,5 @@ from soane.comms.read import read
 
 def test_read(cli):
     # success
-    assert cli(read, 'alpha') == [
-        'Alpha note.\n',
-    ]
+    book, outs = cli(read, 'alpha')
+    assert outs == ['Alpha note.\n']

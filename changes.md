@@ -7,6 +7,7 @@ Changes
 ### Added
 - Environment variable configuration system.
 - Command name abbreviations.
+- New command: `create`.
 
 ### Changed
 - Rewrote application to use plaintext flatfile notes.

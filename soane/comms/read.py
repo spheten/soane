@@ -13,7 +13,7 @@ from soane.comms._base import group
 @click.pass_obj
 def read(book, name):
     '''
-    Print note NAME if it exists.
+    Print the note NAME if it exists.
     '''
 
     if note := book.read(name):

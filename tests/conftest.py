@@ -11,7 +11,7 @@ from soane.items import Book
 @pytest.fixture(scope='function')
 def cli(temp_dire):
     '''
-    Return a function that returns the output of a Click command.
+    Return a function that returns the Book and output of a Click command.
     '''
 
     def func(comm, *args):
@@ -20,7 +20,7 @@ def cli(temp_dire):
             'SOANE_DIR': temp_dire,
             'SOANE_EXT': 'txt',
         })
-        return result.output.splitlines(keepends=True)
+        return obj, result.output.splitlines(keepends=True)
     return func
 
 @pytest.fixture(scope='function')

@@ -6,13 +6,9 @@ from soane.comms.list import list_
 
 def test_read(cli):
     # success - default GLOB
-    assert cli(list_) == [
-        'alpha\n',
-        'bravo\n',
-        'charlie\n',
-    ]
+    book, outs = cli(list_)
+    assert outs == ['alpha\n', 'bravo\n', 'charlie\n']
 
     # success - custom GLOB
-    assert cli(list_, 'a*') == [
-        'alpha\n',
-    ]
+    book, outs = cli(list_, 'a*')
+    assert outs == ['alpha\n']
