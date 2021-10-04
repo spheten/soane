@@ -7,15 +7,15 @@ Soane
 [![](https://img.shields.io/pypi/l/soane)][li]
 [![](https://img.shields.io/github/issues-raw/spheten/soane)][is]
 
-**Soane** (*Stephen's Old-Ass Note Engine*) is a command-line note manager, written and developed by Stephen Malone. Elevator pitch: it's a CLI made of CRUD for your TXTs.
+**Soane** (*Stephen's Old-Ass Note Engine*) is a command-line note manager, written and developed by Stephen Malone. Elevator pitch: it's a CLI made of CRUD for all your TXTs.
 
-It's a deliberately simple system:
+Here's how it works:
 
 - **Your notes** are plaintext files kept in a single directory of your choosing.
 - **The configuration** is two easy environment variables.
-- **The commands** are braindead obvious and super handy.
+- **The commands** operate on those files in super handy ways.
 
-Why use this? If you like text files but hate staring at the file manager, if you want to record information and actually find it later, if you have "summon terminal" bound to a keystroke, then Soane is for you.
+Why do you need this? If you like text files but hate staring at the file manager, if you want to record information and actually find it later, if you have "summon terminal" bound to a keystroke, then Soane is for you.
 
 Installation
 ------------
@@ -31,7 +31,7 @@ or manually download the [latest release][la].
 Setup
 -----
 
-Soane only requires two basic environment variables for configuration:
+Soane only requires two environment variables for configuration:
 
 ```bash
 # The path to your notes directory. Tildes and variables welcome.
@@ -46,7 +46,10 @@ Set these variables wherever you need to. On Windows, go to System Properties or
 Usage
 -----
 
-Soane supports command abbreviation, so you only need to type enough to disambiguate. For example, typing `soane r foo` will automatically translate to `soane read foo`.
+### Basic Advice
+
+- Commands can be abbreviated, so `soane r foo` will automatically expand to `soane read foo`.
+- Notes are referenced by their basename, so a file named `notes/foo.txt` is called `foo` in Soane.
 
 ### list GLOB
 

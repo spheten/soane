@@ -33,13 +33,12 @@ setup(
     keywords = 'cli, command-line, note, notes, note manager',
     packages = find_packages(),
     python_requires  = '>=3.9',
-    install_requires = ['click>=8.0.1'],
-    extras_require   = {'test': ['pytest>=6.2.2']},
+    install_requires = ['click>=8.0'],
+    extras_require   = {'test': ['pytest>=6.2']},
     data_files       = ['changes.md', 'license.md', 'readme.md'],
     entry_points     = {'console_scripts': ['soane=soane.__main__:main']},
 
     project_urls = {
-        'Repository':     'https://github.com/spheten/soane',
         'Bug Tracker':    'https://github.com/spheten/soane/issues',
         'Latest Release': 'https://github.com/spheten/soane/releases/latest',
     },
