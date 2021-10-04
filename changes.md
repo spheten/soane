@@ -5,7 +5,8 @@ Changes
 ------------
 
 ### Added
-- Command abbreviations.
+- Environment variable configuration system.
+- Command name abbreviations.
 
 ### Changed
 - Rewrote application to use plaintext flatfile notes.
