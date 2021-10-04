@@ -24,6 +24,13 @@ class Note:
         self.addr = tools.path.clean(addr)
         self.name = tools.path.name(addr)
 
+    def __contains__(self, string):
+        '''
+        Return True if the Note contains a substring.
+        '''
+
+        return string in self.read()
+
     def __eq__(self, note):
         '''
         Return True if the Note is equal to another Note.
@@ -68,7 +75,7 @@ class Note:
         Return True if the Note exists in the zipfile.
         '''
 
-        return self.zipf.exists(self.addr)
+        return self.addr in self.zipf
 
     def match(self, glob):
         '''

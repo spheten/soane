@@ -92,18 +92,11 @@ class Book:
         '''
 
         addr = self.addr(name)
-        if self.zipf.exists(addr):
+        if addr in self.zipf:
             raise tools.errs.addr_exists(self.path, addr)
 
         self.zipf.create(addr, body)
         return Note(self.path, addr)
-
-    def exists(self, name):
-        '''
-        Return True if a Note exists in the Book.
-        '''
-
-        return self.addr(name) in self.zipf
 
     def read(self, name, default=None):
         '''
@@ -111,7 +104,7 @@ class Book:
         '''
 
         addr = self.addr(name)
-        if self.zipf.exists(addr):
+        if addr in self.zipf:
             return Note(self.path, addr)
         return default
 

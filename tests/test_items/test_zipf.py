@@ -60,11 +60,6 @@ def test_create(zipf):
     with pytest.raises(FileExistsError):
         zipf.create('alpha.txt', 'test_create')
 
-def test_exists(zipf):
-    # success
-    assert zipf.exists('alpha.txt')
-    assert not zipf.exists('nope.txt')
-
 def test_open(zipf):
     # success
     with zipf.open('r') as zobj:

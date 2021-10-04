@@ -61,11 +61,6 @@ def test_create(book):
     with pytest.raises(FileExistsError):
         book.create('alpha', 'test_create')
 
-def test_exists(book):
-    # success
-    assert book.exists('alpha')
-    assert not book.exists('nope')
-
 def test_read(book):
     # success
     assert book.read('alpha', 'test') == book['alpha']

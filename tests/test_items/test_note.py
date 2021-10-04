@@ -17,6 +17,11 @@ def test_init(note):
     assert note.addr == 'alpha.txt'
     assert note.name == 'alpha'
 
+def test_contains(note):
+    # success
+    assert 'Alpha' in note
+    assert 'nope' not in note
+
 def test_eq(note):
     # success
     assert note == note

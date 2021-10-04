@@ -27,7 +27,12 @@ class ZipFile:
         Return True if the Zipfile contains an address.
         '''
 
-        return self.exists(addr)
+        with self.open('r') as zobj:
+            try:
+                zobj.getinfo(addr)
+                return True
+            except KeyError:
+                return False
 
     def __eq__(self, zipf):
         '''
@@ -84,24 +89,12 @@ class ZipFile:
         Create a new address in the Zipfile.
         '''
 
-        if self.exists(addr):
+        if addr in self:
             raise tools.errs.addr_exists(self.path, addr)
 
         with self.open('a') as zobj:
             body = body.strip() + '\n'
             zobj.writestr(addr, body.encode('utf-8'))
-
-    def exists(self, addr):
-        '''
-        Return True if an address exists in the Zipfile.
-        '''
-
-        with self.open('r') as zobj:
-            try:
-                zobj.getinfo(addr)
-                return True
-            except KeyError:
-                return False
 
     @contextlib.contextmanager
     def open(self, mode):
@@ -144,7 +137,7 @@ class ZipFile:
         Overwrite an existing address in the Zipfile.
         '''
 
-        if not self.exists(addr):
+        if addr not in self:
             raise tools.errs.addr_not_exists(self.path, addr)
 
         zdict = self.read_dict()
