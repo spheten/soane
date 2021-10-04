@@ -31,6 +31,7 @@ def test_group(cli, temp_dire):
         'SOANE_DIR': '',
         'SOANE_EXT': 'txt',
     })
+    assert 'SOANE_DIR environment variable not set.' in result.output
     assert result.exit_code == 2
 
     # failure - missing SOANE_EXT
@@ -38,4 +39,13 @@ def test_group(cli, temp_dire):
         'SOANE_DIR': temp_dire,
         'SOANE_EXT': '',
     })
+    assert 'SOANE_EXT environment variable not set.' in result.output
+    assert result.exit_code == 2
+
+    # failure - nonexistent SOANE_DIR
+    result = CliRunner().invoke(_base.group, ['test'], env={
+        'SOANE_DIR': '/nope',
+        'SOANE_EXT': 'txt',
+    })
+    assert 'Configured notes directory does not exist.' in result.output
     assert result.exit_code == 2

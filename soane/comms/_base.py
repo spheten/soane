@@ -22,9 +22,11 @@ def group(ctx):
         dire = os.environ.get('SOANE_DIR', '').strip()
         ext  = os.environ.get('SOANE_EXT', '').strip()
 
-        if dire and ext:
-            ctx.obj = Book(dire, ext)
-        elif not dire:
+        if not dire:
             ctx.fail('SOANE_DIR environment variable not set.')
         elif not ext:
             ctx.fail('SOANE_EXT environment variable not set.')
+
+        ctx.obj = Book(dire, ext)
+        if not ctx.obj.exists():
+            ctx.fail('Configured notes directory does not exist.')
