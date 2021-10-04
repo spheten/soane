@@ -9,7 +9,7 @@ from soane import tools
 
 class ZipFile:
     '''
-    A zipfile container and controller.
+    A plaintext zipfile container and controller.
     '''
 
     compression   = zipfile.ZIP_DEFLATED

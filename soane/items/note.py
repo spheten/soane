@@ -9,7 +9,7 @@ from soane.items.zipf import ZipFile
 
 class Note:
     '''
-    A plaintext note file in a zipfile.
+    A plaintext note in a ZipFile.
     '''
 
     __slots__ = ['path', 'zipf', 'addr', 'name']

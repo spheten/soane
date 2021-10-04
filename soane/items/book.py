@@ -10,7 +10,7 @@ from soane.items.zipf import ZipFile
 
 class Book:
     '''
-    A zipfile containing plaintext Notes.
+    A ZipFile containing plaintext Notes.
     '''
 
     addr_ext  = 'txt'
