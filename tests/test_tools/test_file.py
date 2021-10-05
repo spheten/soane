@@ -14,15 +14,6 @@ def test_create(tmpdir):
     file.create(path, 'body')
     assert path.read() == 'body\n'
 
-def test_delete(tmpdir):
-    # setup
-    path = tmpdir.join('test.txt')
-    path.write('')
-
-    # success
-    file.delete(path)
-    assert not path.isfile()
-
 def test_duplicate(tmpdir):
     # setup
     orig = tmpdir.join('orig.txt')

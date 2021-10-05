@@ -41,7 +41,7 @@ SOANE_DIR = "~/path/to/notes"
 SOANE_EXT = "txt"
 ```
 
-Set these variables wherever you need to. On Windows, go to System Properties or search for "environment variables" in Start; on Linux and Mac you'll need to edit a dotfile in your home directory.
+Set these variables and you're good to go. On Windows, go to System Properties or search for "environment variables" in Start; on Linux and Mac you'll need to edit a dotfile in your home directory.
 
 Usage
 -----
@@ -57,7 +57,7 @@ Create a new empty note called `NAME`.
 
 ```bash
 $ soane create dean
-# Creates the empty file 'dean.<ext>' in your notes directory.
+# Creates the empty file 'dean' in your notes directory.
 ```
 
 ### list GLOB
@@ -83,7 +83,7 @@ Open a note in your default text editor.
 
 ```bash
 $ soane open emily
-# Opens 'emily.<ext>' in your default editor for SOANE_EXT.
+# Opens 'emily' in your default editor for SOANE_EXT.
 ```
 
 ### read NAME

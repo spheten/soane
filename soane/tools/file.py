@@ -20,13 +20,6 @@ def create(path, body):
     with open(path, 'x', **FILE_OPTS) as fobj:
         fobj.write(body.strip() + '\n')
 
-def delete(path):
-    '''
-    Delete an existing file.
-    '''
-
-    os.remove(path)
-
 def duplicate(path, name):
     '''
     Duplicate a file to another name in the same directory.
