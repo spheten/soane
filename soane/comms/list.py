@@ -11,11 +11,11 @@ from soane.comms._base import group
     short_help = 'List notes.',
     add_help_option = False,
 )
-@click.help_option('-h', '--help')
 @click.argument('glob',
     default  = '*',
     required = False,
 )
+@click.help_option('-h', '--help')
 @click.pass_obj
 def list_(book, glob):
     '''

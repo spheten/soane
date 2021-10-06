@@ -1,5 +1,5 @@
 '''
-Command definition for 'open'.
+Command definition for 'delete'.
 '''
 
 import click
@@ -7,19 +7,19 @@ import click
 from soane.comms._base import group
 
 @group.command(
-    name       = 'open',
-    short_help = 'Open a note.',
+    name       = 'delete',
+    short_help = 'Delete a note.',
     add_help_option = False,
 )
 @click.argument('name')
 @click.help_option('-h', '--help')
 @click.pass_obj
-def open_(book, name):
+def delete(book, name):
     '''
-    Open the note NAME in your default editor.
+    Send the note NAME to your system trash.
     '''
 
     if note := book.read(name):
-        click.launch(note.path)
+        note.delete()
     else:
         click.echo(f'Error: the note {name!r} does not exist.')

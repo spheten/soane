@@ -37,7 +37,7 @@ Soane only requires two environment variables for configuration:
 # The path to your notes directory. Tildes and variables welcome.
 SOANE_DIR = "~/path/to/notes"
 
-# The extension your note files use. No leading dot, please.
+# The file extension your notes use. No leading dot, please.
 SOANE_EXT = "txt"
 ```
 
@@ -65,7 +65,16 @@ To open the note immediately after creation, add `-o / --open-after`:
 
 ```bash
 $ soane create jess -o
-# Creates the empty file 'jess' and opens in your default text editor.
+# Creates 'jess' and opens it in your default text editor.
+```
+
+### `delete NAME`
+
+Delete the note called `NAME` by sending it to your operating system trash.
+
+```bash
+$ soane delete tristan
+# Sends 'tristan' to your operating system trash.
 ```
 
 ### `list GLOB`
