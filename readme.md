@@ -48,10 +48,11 @@ Usage
 
 ### Basic Advice
 
-- Commands can be abbreviated, so `soane r foo` will automatically expand to `soane read foo`.
-- Notes are referenced by their basename, so a file named `notes/foo.txt` is called `foo` in Soane.
+- Commands can be abbreviated, so `soane r foo` automatically expands to `soane read foo`.
+- Notes are referenced by basename, so a file named `notes/foo.txt` is called `foo`.
+- All commands have built-in help, so start with `soane --help` and look around!
 
-### create NAME
+### `create NAME [-o]`
 
 Create a new empty note called `NAME`.
 
@@ -60,7 +61,14 @@ $ soane create dean
 # Creates the empty file 'dean' in your notes directory.
 ```
 
-### list GLOB
+To open the note immediately after creation, add `-o / --open-after`:
+
+```bash
+$ soane create jess -o
+# Creates the empty file 'jess' and opens in your default text editor.
+```
+
+### `list GLOB`
 
 Print the names of all notes, or notes matching `GLOB` (default `*`).
 
@@ -77,7 +85,7 @@ lorelai
 luke
 ```
 
-### open NAME
+### `open NAME`
 
 Open a note in your default text editor.
 
@@ -86,7 +94,7 @@ $ soane open emily
 # Opens 'emily' in your default editor for SOANE_EXT.
 ```
 
-### read NAME
+### `read NAME`
 
 Print the contents of a note, if it exists.
 

@@ -11,15 +11,21 @@ from soane.comms._base import group
     short_help = 'Create a note.',
     add_help_option = False,
 )
-@click.help_option('-h', '--help')
 @click.argument('name')
+@click.option('-o', '--open-after',
+    help    = 'Open after creation.',
+    is_flag = True,
+)
+@click.help_option('-h', '--help')
 @click.pass_obj
-def create(book, name):
+def create(book, name, open_after):
     '''
     Create the empty note NAME.
     '''
 
     if name not in book:
-        book.create(name)
+        note = book.create(name)
+        if open_after:
+            click.launch(note.path)
     else:
         click.echo(f'Error: The note {name!r} already exists.')
