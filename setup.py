@@ -33,7 +33,7 @@ setup(
     keywords = 'cli, command-line, note, notes, note manager',
     packages = find_packages(),
     python_requires  = '>=3.9',
-    install_requires = ['click>=8.0'],
+    install_requires = ['click>=8.0', 'Send2Trash>=1.8'],
     extras_require   = {'test': ['pytest>=6.2']},
     data_files       = ['changes.md', 'license.md', 'readme.md'],
     entry_points     = {'console_scripts': ['soane=soane.__main__:main']},

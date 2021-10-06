@@ -45,6 +45,11 @@ def test_repr(note):
     # success
     assert repr(note) == "Note('/alpha.txt')"
 
+def test_delete(note):
+    # success
+    note.delete()
+    assert not note.exists()
+
 def test_exists(note):
     # success
     assert note.exists()

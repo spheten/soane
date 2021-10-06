@@ -6,6 +6,8 @@ import glob as glob_
 import os
 import shutil
 
+import send2trash
+
 from soane import tools
 
 FILE_OPTS = {
@@ -19,6 +21,13 @@ def create(path, body):
 
     with open(path, 'x', **FILE_OPTS) as fobj:
         fobj.write(body.strip() + '\n')
+
+def delete(path):
+    '''
+    Delete a file by sending it to system trash.
+    '''
+
+    send2trash.send2trash(path)
 
 def duplicate(path, name):
     '''

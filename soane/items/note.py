@@ -64,6 +64,13 @@ class Note:
 
         return f'Note({self.path!r})'
 
+    def delete(self):
+        '''
+        Delete the Note's file by sending it to system trash.
+        '''
+
+        tools.file.delete(self.path)
+
     def exists(self):
         '''
         Return True if the Note's file exists.
