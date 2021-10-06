@@ -24,6 +24,7 @@ def test_AbbrGroup():
     # success
     assert group.get_command(None, 'test-o')   == test_one
     assert group.get_command(None, 'test-one') == test_one
+    assert group.get_command(None, 'nope')     == None
 
     with pytest.raises(click.exceptions.UsageError):
         group.get_command(click.Context(group), 'test')

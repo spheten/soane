@@ -4,20 +4,20 @@ Command-line user interface classes and functions.
 
 import click
 
+from soane import tools
+
 class AbbrGroup(click.Group):
     '''
     A custom Group type that supports abbreviated commands.
     '''
 
-    def get_command(self, ctx, comm_name):
+    def get_command(self, ctx, name):
         '''
         Return a Command from a complete or abbreviated name.
         '''
 
-        names = [
-            name for name in self.list_commands(ctx)
-            if name.startswith(comm_name)
-        ]
+        comms = self.list_commands(ctx)
+        names = tools.text.disambiguate(name, comms)
 
         if not names:
             return None

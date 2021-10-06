@@ -2,8 +2,6 @@
 Class definition for 'Note'.
 '''
 
-import fnmatch
-
 from soane import tools
 
 class Note:
@@ -78,7 +76,7 @@ class Note:
         Return True if the Note's name matches a glob pattern.
         '''
 
-        return fnmatch.fnmatch(self.name, glob)
+        return tools.text.glob(self.name, glob)
 
     def read(self):
         '''
