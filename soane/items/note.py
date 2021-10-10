@@ -92,6 +92,14 @@ class Note:
 
         return tools.file.read(self.path)
 
+    def rename(self, name):
+        '''
+        Rename the Note's file and update instance attributes.
+        '''
+
+        dest = tools.file.rename(self.path, name)
+        self.__init__(dest)
+
     def search(self, text):
         '''
         Return True if the Note's body contains a substring.
