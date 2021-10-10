@@ -30,9 +30,10 @@ def test_duplicate(tmpdir):
     orig.write('')
 
     # success
-    file.duplicate(orig, 'dest')
+    path = file.duplicate(orig, 'dest')
     assert orig.isfile()
     assert dest.isfile()
+    assert path == str(dest)
 
 def test_exists(tmpdir):
     # setup
@@ -70,9 +71,10 @@ def test_rename(tmpdir):
     orig.write('')
 
     # success
-    file.rename(orig, 'dest')
+    path = file.rename(orig, 'dest')
     assert not orig.isfile()
     assert dest.isfile()
+    assert path == str(dest)
 
 def test_write(tmpdir):
     # setup

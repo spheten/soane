@@ -31,13 +31,15 @@ def delete(path):
 
 def duplicate(path, name):
     '''
-    Duplicate a file to another name in the same directory.
+    Duplicate a file to another name in the same directory and return
+    the new path.
     '''
 
     dire = tools.path.dire(path)
     ext  = tools.path.ext(path)
     dest = tools.path.join(dire, f'{name}.{ext}')
     shutil.copyfile(path, dest)
+    return dest
 
 def exists(path, dire=False):
     '''
@@ -67,13 +69,15 @@ def read(path):
 
 def rename(path, name):
     '''
-    Move a file to a new name in the same directory.
+    Move a file to another name in the same directory and return the
+    new path.
     '''
 
     dire = tools.path.dire(path)
     ext  = tools.path.ext(path)
     dest = tools.path.join(dire, f'{name}.{ext}')
     shutil.move(path, dest)
+    return dest
 
 def write(path, body):
     '''
