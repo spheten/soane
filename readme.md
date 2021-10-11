@@ -93,7 +93,7 @@ $ soane list pea*
 peanutbutter
 ```
 
-### `move` NAME DEST`
+### `move NAME DEST`
 
 move a note to a new name, if that name doesn't already exist.
 
