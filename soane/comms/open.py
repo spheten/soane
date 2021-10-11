@@ -19,7 +19,8 @@ def open_(book, name):
     Open the note NAME in your default editor.
     '''
 
-    if note := book.read(name):
-        click.launch(note.path)
-    else:
-        click.echo(f'Error: the note {name!r} does not exist.')
+    if name not in book:
+        raise click.ClickException(f'the note {name!r} does not exist.')
+
+    note = book.read(name)
+    click.launch(note.path)

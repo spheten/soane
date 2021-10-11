@@ -23,9 +23,9 @@ def create(book, name, open_after):
     Create the empty note NAME.
     '''
 
-    if name not in book:
-        note = book.create(name)
-        if open_after:
-            click.launch(note.path)
-    else:
-        click.echo(f'Error: The note {name!r} already exists.')
+    if name in book:
+        raise click.ClickException(f'the note {name!r} already exists.')
+
+    note = book.create(name)
+    if open_after:
+        click.launch(note.path)

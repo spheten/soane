@@ -26,5 +26,5 @@ def test_read(cli, monkeypatch):
     # failure - existing note
     book, outs = cli(create, 'alpha')
     assert outs == [
-        "Error: The note 'alpha' already exists.\n",
+        "Error: the note 'alpha' already exists.\n",
     ]

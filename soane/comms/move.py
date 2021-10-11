@@ -20,10 +20,11 @@ def move(book, name, dest):
     Rename the note NAME to DEST.
     '''
 
-    if note := book.read(name):
-        if dest in book:
-            click.echo(f'Error: the note {dest!r} already exists.')
-        else:
-            note.move(dest)
-    else:
-        click.echo(f'Error: the note {name!r} does not exist.')
+    if name not in book:
+        raise click.ClickException(f'the note {name!r} does not exist.')
+
+    if dest in book:
+        raise click.ClickException(f'the note {dest!r} already exists.')
+
+    note = book.read(name)
+    note.move(dest)

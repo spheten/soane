@@ -19,7 +19,8 @@ def delete(book, name):
     Send the note NAME to your system trash.
     '''
 
-    if note := book.read(name):
-        note.delete()
-    else:
-        click.echo(f'Error: the note {name!r} does not exist.')
+    if name not in book:
+        raise click.ClickException(f'the note {name!r} does not exist.')
+
+    note = book.read(name)
+    note.delete()

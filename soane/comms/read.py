@@ -19,5 +19,8 @@ def read(book, name):
     Print the note NAME if it exists.
     '''
 
-    if note := book.read(name):
-        click.echo(note.read().strip())
+    if name not in book:
+        raise click.ClickException(f'the note {name!r} does not exist.')
+
+    note = book.read(name)
+    click.echo(note.read().strip())
