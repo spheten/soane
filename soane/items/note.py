@@ -92,12 +92,12 @@ class Note:
 
         return tools.file.read(self.path)
 
-    def rename(self, name):
+    def move(self, name):
         '''
-        Rename the Note's file and update instance attributes.
+        Move the Note's file to another name in the same directory.
         '''
 
-        dest = tools.file.rename(self.path, name)
+        dest = tools.file.move(self.path, name)
         self.__init__(dest)
 
     def search(self, text):

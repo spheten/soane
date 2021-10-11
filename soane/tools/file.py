@@ -14,6 +14,18 @@ FILE_OPTS = {
     'encoding': 'utf-8',
 }
 
+def copy(path, name):
+    '''
+    Copy a file to another name in the same directory and return
+    the new path.
+    '''
+
+    dire = tools.path.dire(path)
+    ext  = tools.path.ext(path)
+    dest = tools.path.join(dire, f'{name}.{ext}')
+    shutil.copyfile(path, dest)
+    return dest
+
 def create(path, body):
     '''
     Create a new file containing a string.
@@ -28,18 +40,6 @@ def delete(path):
     '''
 
     send2trash.send2trash(path)
-
-def duplicate(path, name):
-    '''
-    Duplicate a file to another name in the same directory and return
-    the new path.
-    '''
-
-    dire = tools.path.dire(path)
-    ext  = tools.path.ext(path)
-    dest = tools.path.join(dire, f'{name}.{ext}')
-    shutil.copyfile(path, dest)
-    return dest
 
 def exists(path, dire=False):
     '''
@@ -67,10 +67,9 @@ def read(path):
     with open(path, 'r', **FILE_OPTS) as fobj:
         return fobj.read().strip() + '\n'
 
-def rename(path, name):
+def move(path, name):
     '''
-    Move a file to another name in the same directory and return the
-    new path.
+    Move a file to another name in the same directory and return the new path.
     '''
 
     dire = tools.path.dire(path)

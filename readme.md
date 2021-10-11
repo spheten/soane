@@ -93,6 +93,14 @@ $ soane list pea*
 peanutbutter
 ```
 
+### `move` NAME DEST`
+
+move a note to a new name, if that name doesn't already exist.
+
+```text
+$ soane `move` carolyn princess-carolyn
+```
+
 ### `open NAME`
 
 Open a note in your default text editor.
@@ -111,14 +119,6 @@ $ soane read bojack
 “I’m responsible for my own happiness? I can’t even be responsible
 for my own breakfast.”
 - Bojack Horseman
-```
-
-### `rename NAME DEST`
-
-Rename a note to a new name, if that name doesn't already exist.
-
-```text
-$ soane rename carolyn princess-carolyn
 ```
 
 Contributions

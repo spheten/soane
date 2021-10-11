@@ -7,7 +7,7 @@ Changes
 ### Added
 - Environment variable configuration system.
 - Command name abbreviations.
-- New commands: `create`, `delete`, `list`, `open`, `rename`.
+- New commands: `create`, `delete`, `list`, `move`, `open`.
 
 ### Changed
 - Rewrote application to use plaintext flatfile notes.

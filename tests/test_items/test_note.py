@@ -64,11 +64,11 @@ def test_read(note):
     # success
     assert note.read() == 'Alpha note.\n'
 
-def test_rename(note):
+def test_move(note):
     # success
-    note.rename('rename')
-    assert note.path.endswith('rename.txt')
-    assert note.name == 'rename'
+    note.move('move')
+    assert note.path.endswith('move.txt')
+    assert note.name == 'move'
 
 def test_search(note):
     # success

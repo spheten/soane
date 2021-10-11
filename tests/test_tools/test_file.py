@@ -6,6 +6,18 @@ import pytest
 
 from soane.tools import file
 
+def test_copy(tmpdir):
+    # setup
+    orig = tmpdir.join('orig.txt')
+    dest = tmpdir.join('dest.txt')
+    orig.write('')
+
+    # success
+    path = file.copy(orig, 'dest')
+    assert orig.isfile()
+    assert dest.isfile()
+    assert path == str(dest)
+
 def test_create(tmpdir):
     # setup
     path = tmpdir.join('test.txt')
@@ -22,18 +34,6 @@ def test_delete(tmpdir):
     # success
     file.delete(path)
     assert not path.exists()
-
-def test_duplicate(tmpdir):
-    # setup
-    orig = tmpdir.join('orig.txt')
-    dest = tmpdir.join('dest.txt')
-    orig.write('')
-
-    # success
-    path = file.duplicate(orig, 'dest')
-    assert orig.isfile()
-    assert dest.isfile()
-    assert path == str(dest)
 
 def test_exists(tmpdir):
     # setup
@@ -64,14 +64,14 @@ def test_read(tmpdir):
     # success
     assert file.read(path) == 'body\n'
 
-def test_rename(tmpdir):
+def test_move(tmpdir):
     # setup
     orig = tmpdir.join('orig.txt')
     dest = tmpdir.join('dest.txt')
     orig.write('')
 
     # success
-    path = file.rename(orig, 'dest')
+    path = file.move(orig, 'dest')
     assert not orig.isfile()
     assert dest.isfile()
     assert path == str(dest)
