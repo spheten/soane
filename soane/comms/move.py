@@ -17,7 +17,7 @@ from soane.comms._base import group
 @click.pass_obj
 def move(book, name, dest):
     '''
-    move the note NAME to DEST.
+    Rename the note NAME to DEST.
     '''
 
     if note := book.read(name):
