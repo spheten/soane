@@ -48,50 +48,49 @@ Usage
 
 ### Basic Advice
 
-- Commands can be abbreviated, so `soane r foo` automatically expands to `soane read foo`.
-- Notes are referenced by basename, so a file named `notes/foo.txt` is called `foo`.
+- Commands can be abbreviated, so `soane l` automatically expands to `soane list`.
+- Notes are referenced by base filename, so `notes/foo.txt` is called `foo`.
 - All commands have built-in help, so start with `soane --help` and look around!
 
 ### `create NAME [-o]`
 
-Create a new empty note called `NAME`.
+Create a new empty note file.
 
 ```bash
-$ soane create dean
-# Creates the empty file 'dean' in your notes directory.
+$ soane create bojack
+# Creates the empty file 'bojack' in your notes directory.
 ```
 
 To open the note immediately after creation, add `-o / --open-after`:
 
 ```bash
-$ soane create jess -o
-# Creates 'jess' and opens it in your default text editor.
+$ soane create bojack -o
+# Creates 'bojack' and opens it in your default text editor.
 ```
 
 ### `delete NAME`
 
-Delete the note called `NAME` by sending it to your operating system trash.
+Delete a note by sending it to your operating system trash.
 
 ```bash
-$ soane delete tristan
-# Sends 'tristan' to your operating system trash.
+$ soane delete sarah
+# Sends 'sarah' to your operating system trash.
 ```
 
 ### `list GLOB`
 
 Print the names of all notes, or notes matching `GLOB` (default `*`).
 
-```text
+```bash
 $ soane list
-emily
-lorelai
-luke
-rory
-sookie
+bojack
+carolyn
+diane
+peanutbutter
+todd
 
-$ soane list l*
-lorelai
-luke
+$ soane list pea*
+peanutbutter
 ```
 
 ### `open NAME`
@@ -99,8 +98,8 @@ luke
 Open a note in your default text editor.
 
 ```bash
-$ soane open emily
-# Opens 'emily' in your default editor for SOANE_EXT.
+$ soane open bojack
+# Opens 'bojack' in your default editor for SOANE_EXT.
 ```
 
 ### `read NAME`
@@ -108,9 +107,18 @@ $ soane open emily
 Print the contents of a note, if it exists.
 
 ```text
-$ soane read lorelai
-“As long as everything is exactly the way I want it, I'm totally flexible.”
-- Lorelai Gilmore
+$ soane read bojack
+“I’m responsible for my own happiness? I can’t even be responsible
+for my own breakfast.”
+- Bojack Horseman
+```
+
+### `rename NAME DEST`
+
+Rename a note to a new name, if that name doesn't already exist.
+
+```text
+$ soane rename carolyn princess-carolyn
 ```
 
 Contributions
